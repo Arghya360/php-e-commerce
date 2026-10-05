@@ -1,83 +1,182 @@
 export function renderFalaqFooter(): string {
   return `
-    <footer class="falaq-site-footer">
-      <div class="elementor-container">
-        <div class="footer-falaq-grid">
-          <!-- Col 1: Brand & Contact -->
-          <div class="footer-falaq-col footer-falaq-brand">
-            <a href="#" class="footer-logo-link" data-nav="Home">
-              <img src="/uploads/assets/logo.png" alt="Falaq Food" class="footer-logo-img" />
+    <footer class="falaq-site-footer fresh-theme-footer">
+      <div class="shop-container footer-container">
+        
+        <!-- Main Top Grid -->
+        <div class="footer-main-grid">
+          
+          <!-- Left Column: Brand Logo, Heading, Newsletter, Socials, App Badges, We Accept -->
+          <div class="footer-newsletter-col">
+            <!-- Brand Logo -->
+            <a href="#" class="footer-brand-logo" data-nav="Home" aria-label="E-Commerce Shopping Home">
+              <img src="/logo.png" alt="E-Commerce Shopping" class="footer-brand-logo-img" />
             </a>
-            <p class="footer-brand-desc">
-              ফলক ফুড - প্রাকৃতিক ও পুষ্টিকর খাদ্য পণ্যের বিশ্বস্ত অনলাইন শপ। আমরা সরবরাহ করি খাঁটি ও ভেজালমুক্ত পণ্য সরাসরি আপনার দোরগোড়ায়।
-            </p>
-            <div class="footer-contact-info">
-              <div class="footer-contact-row">
-                <svg viewBox="0 0 512 512" width="14" height="14" fill="#0d874c"><path d="M497.39 361.8l-112-48a24 24 0 0 0-28 6.9l-49.6 60.6A370.66 370.66 0 0 1 130.6 204.11l60.6-49.6a23.94 23.94 0 0 0 6.9-28l-48-112A24.16 24.16 0 0 0 122.6.61l-104 24A24 24 0 0 0 0 48c0 256.5 207.9 464 464 464a24 24 0 0 0 23.4-18.6l24-104a24.29 24.29 0 0 0-14.01-27.6z"></path></svg>
-                <span>01711-123456</span>
+
+            <!-- Big Newsletter Heading -->
+            <h2 class="footer-inbox-heading">
+              GET FRESH FOOD<br />IN YOUR INBOX
+            </h2>
+
+            <!-- Newsletter Input Form -->
+            <form class="footer-subscribe-form" id="footer-newsletter-form" onsubmit="event.preventDefault(); const toast = document.querySelector('.shop-toast-notification'); if(toast){ toast.textContent = 'Thank you for subscribing!'; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 3000); } this.reset();">
+              <div class="footer-input-wrapper">
+                <input 
+                  type="email" 
+                  class="footer-inbox-input" 
+                  placeholder="Enter your email address" 
+                  aria-label="Email address"
+                  required 
+                />
+                <button type="submit" class="footer-inbox-submit-btn" aria-label="Subscribe to newsletter">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </button>
               </div>
-              <div class="footer-contact-row">
-                <svg viewBox="0 0 512 512" width="14" height="14" fill="#0d874c"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.5c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.6zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>
-                <span>info@falaqfood.com</span>
+            </form>
+
+            <!-- Follow Us & Social Media Icons -->
+            <div class="footer-social-wrapper">
+              <span class="footer-follow-label">Follow Us</span>
+              <div class="footer-social-icons">
+                <a href="https://instagram.com" target="_blank" rel="noreferrer" class="footer-social-icon" aria-label="Instagram">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                </a>
+                <a href="https://facebook.com" target="_blank" rel="noreferrer" class="footer-social-icon" aria-label="Facebook">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                  </svg>
+                </a>
+                <a href="https://youtube.com" target="_blank" rel="noreferrer" class="footer-social-icon" aria-label="YouTube">
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                    <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                    <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#fff"></polygon>
+                  </svg>
+                </a>
+                <a href="https://twitter.com" target="_blank" rel="noreferrer" class="footer-social-icon" aria-label="Twitter">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+                  </svg>
+                </a>
               </div>
             </div>
-          </div>
 
-          <!-- Col 2: Customer Service -->
-          <div class="footer-falaq-col">
-            <h4 class="footer-col-heading">Customer Service</h4>
-            <ul class="footer-links-list">
-              <li><a href="#" class="footer-link">Contact Us</a></li>
-              <li><a href="#" class="footer-link">Track Order</a></li>
-              <li><a href="#" class="footer-link">Return &amp; Exchange</a></li>
-              <li><a href="#" class="footer-link">Shipping Information</a></li>
-              <li><a href="#" class="footer-link">Privacy Policy</a></li>
-            </ul>
-          </div>
+            <!-- App Store & Google Play Badges -->
+            <div class="footer-app-badges">
+              <a href="#" class="footer-app-btn" aria-label="Download on the App Store">
+                <svg class="app-btn-icon" viewBox="0 0 384 512" width="20" height="20" fill="currentColor">
+                  <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 66.8 30.6 122.9c15.2 27.6 34.6 55.4 62.7 54.8 28.1-.6 38.6-18.6 71.9-18.6 33.5 0 43.2 18.6 72.3 18.2 29.5-.4 48.7-25.1 63.8-52.6 17.7-32.3 25-63.5 25.4-65.2-1.1-.5-49.9-20.1-52-64.3zM245.9 89.8c14.2-18.2 24.3-43.2 21.4-68.8-21.7 1-47.4 14.8-62.4 32.7-13.4 15.7-24.8 41.2-21.6 65.7 24.2 1.9 48.7-12 62.6-29.6z"/>
+                </svg>
+                <div class="app-btn-text">
+                  <span class="app-btn-sub">Download on the</span>
+                  <span class="app-btn-title">App Store</span>
+                </div>
+              </a>
 
-          <!-- Col 3: Useful Links -->
-          <div class="footer-falaq-col">
-            <h4 class="footer-col-heading">Useful Links</h4>
-            <ul class="footer-links-list">
-              <li><a href="#" class="footer-link">About Us</a></li>
-              <li><a href="#" class="footer-link">Our Farmers</a></li>
-              <li><a href="#" class="footer-link">Blogs</a></li>
-              <li><a href="#" class="footer-link">FAQs</a></li>
-              <li><a href="#" class="footer-link">Terms of Service</a></li>
-            </ul>
-          </div>
-
-          <!-- Col 4: Follow Us & Payment -->
-          <div class="footer-falaq-col">
-            <h4 class="footer-col-heading">Follow Us</h4>
-            <div class="footer-social-circles">
-              <a href="https://facebook.com" target="_blank" rel="noreferrer" class="social-circle-btn facebook" aria-label="Facebook">
-                <svg viewBox="0 0 512 512" width="14" height="14" fill="#fff"><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"></path></svg>
-              </a>
-              <a href="https://instagram.com" target="_blank" rel="noreferrer" class="social-circle-btn instagram" aria-label="Instagram">
-                <svg viewBox="0 0 448 512" width="14" height="14" fill="#fff"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"></path></svg>
-              </a>
-              <a href="https://youtube.com" target="_blank" rel="noreferrer" class="social-circle-btn youtube" aria-label="YouTube">
-                <svg viewBox="0 0 576 512" width="14" height="14" fill="#fff"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"></path></svg>
-              </a>
-              <a href="https://twitter.com" target="_blank" rel="noreferrer" class="social-circle-btn twitter" aria-label="Twitter">
-                <svg viewBox="0 0 512 512" width="14" height="14" fill="#fff"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"></path></svg>
+              <a href="#" class="footer-app-btn" aria-label="Get it on Google Play">
+                <svg class="app-btn-icon" viewBox="0 0 512 512" width="20" height="20" fill="currentColor">
+                  <path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/>
+                </svg>
+                <div class="app-btn-text">
+                  <span class="app-btn-sub">GET IT ON</span>
+                  <span class="app-btn-title">Google Play</span>
+                </div>
               </a>
             </div>
-            <div class="footer-payment-section">
-              <div class="footer-payment-label">We Accept</div>
-              <img src="/uploads/assets/paywith_ssl.png" alt="Payment Methods" class="footer-paywith-img" />
+
+            <!-- We Accept Payment Section -->
+            <div class="footer-we-accept-wrap">
+              <span class="footer-we-accept-text">We Accept</span>
+              <img src="/uploads/assets/paywith_ssl.png" alt="Payment Methods" class="footer-paywith-ssl-img" />
             </div>
+          </div>
+
+          <!-- Right 3 Navigation Columns: SHOP, LEARN, ABOUT -->
+          <div class="footer-links-grid">
+            <!-- Column 1: SHOP -->
+            <div class="footer-nav-col">
+              <h3 class="footer-nav-col-title">SHOP</h3>
+              <ul class="footer-col-nav-links">
+                <li><a href="#" class="footer-nav-item-link" data-nav="Shop">All Products</a></li>
+                <li><a href="#" class="footer-nav-item-link" data-nav="Shop">Fresh Fruits</a></li>
+                <li><a href="#" class="footer-nav-item-link" data-nav="Shop">Vegetables</a></li>
+                <li><a href="#" class="footer-nav-item-link" data-nav="Shop">Dairy &amp; Eggs</a></li>
+                <li><a href="#" class="footer-nav-item-link" data-nav="Shop">Meat &amp; Seafood</a></li>
+                <li><a href="#" class="footer-nav-item-link" data-nav="Shop">Bakery</a></li>
+                <li><a href="#" class="footer-nav-item-link" data-nav="Shop">Gift Cards</a></li>
+              </ul>
+            </div>
+
+            <!-- Column 2: LEARN -->
+            <div class="footer-nav-col">
+              <h3 class="footer-nav-col-title">LEARN</h3>
+              <ul class="footer-col-nav-links">
+                <li><a href="#" class="footer-nav-item-link">About Us</a></li>
+                <li><a href="#" class="footer-nav-item-link">Blog</a></li>
+                <li><a href="#" class="footer-nav-item-link">Healthy Recipes</a></li>
+                <li><a href="#" class="footer-nav-item-link">Organic Guide</a></li>
+                <li><a href="#" class="footer-nav-item-link">Nutrition Tips</a></li>
+                <li><a href="#" class="footer-nav-item-link">Help &amp; FAQ</a></li>
+                <li><a href="#" class="footer-nav-item-link">Store Locator</a></li>
+              </ul>
+            </div>
+
+            <!-- Column 3: ABOUT -->
+            <div class="footer-nav-col">
+              <h3 class="footer-nav-col-title">ABOUT</h3>
+              <ul class="footer-col-nav-links">
+                <li><a href="#" class="footer-nav-item-link">Our Story</a></li>
+                <li><a href="#" class="footer-nav-item-link">Careers</a></li>
+                <li><a href="#" class="footer-nav-item-link">Track Your Order</a></li>
+                <li><a href="#" class="footer-nav-item-link">Shipping &amp; Returns</a></li>
+                <li><a href="#" class="footer-nav-item-link">Contact Us</a></li>
+                <li><a href="#" class="footer-nav-item-link">Open Your Store</a></li>
+                <li><a href="#" class="footer-nav-item-link">Privacy Policy</a></li>
+                <li><a href="#" class="footer-nav-item-link">Terms of Service</a></li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Bottom Row -->
+        <div class="footer-bottom-bar-row">
+          <!-- Left: Country/Currency Selector -->
+          <div class="footer-currency-box">
+            <select class="footer-currency-dropdown" aria-label="Select Country and Currency">
+              <option value="Bangladesh (USD $)" selected>Bangladesh (USD $)</option>
+              <option value="Bangladesh (BDT ৳)">Bangladesh (BDT ৳)</option>
+              <option value="United States (USD $)">United States (USD $)</option>
+              <option value="United Kingdom (GBP £)">United Kingdom (GBP £)</option>
+            </select>
+            <span class="currency-dropdown-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </div>
+
+          <!-- Center: Designed & Developed by Arghya Biswas -->
+          <div class="footer-developer-credit">
+            Designed &amp; Developed by <a href="https://www.linkedin.com/in/arghyabiswas360/" target="_blank" rel="noreferrer" class="developer-profile-link">Arghya Biswas</a>
+          </div>
+
+          <!-- Right: Copyright & Terms -->
+          <div class="footer-copyright-terms-right">
+            <span>© 2026 Fresh Food. All rights reserved.</span>
+            <span class="copy-sep">|</span>
+            <a href="#" class="copy-link">Privacy</a>
+            <span class="copy-sep">|</span>
+            <a href="#" class="copy-link">Terms</a>
           </div>
         </div>
-      </div>
 
-      <!-- Bottom Green Bar -->
-      <div class="footer-bottom-green-bar">
-        <div class="elementor-container footer-bottom-inner">
-          <div class="footer-copy-left">© 2026 Falaq Food</div>
-          <div class="footer-copy-right">Designed by Falaq Food</div>
-        </div>
       </div>
     </footer>
   `;

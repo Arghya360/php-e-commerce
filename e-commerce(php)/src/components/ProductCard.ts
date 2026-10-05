@@ -4,7 +4,7 @@ export function renderProductCard(product: Product): string {
   const isDiscounted = Boolean(product.oldPrice && product.oldPrice > product.price);
   
   return `
-    <div class="shop-product-card" data-product-id="${product.id}">
+    <div class="shop-product-card" data-product-id="${product.id}" role="link" tabindex="0" aria-label="View ${product.title}">
       <div class="product-card-top">
         ${product.badge ? `<span class="product-discount-badge">${product.badge}</span>` : ''}
         <div class="product-image-box">

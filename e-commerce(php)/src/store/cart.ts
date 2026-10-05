@@ -17,10 +17,13 @@ export interface CartState {
 }
 
 const STORAGE_KEY = 'falaqfood_cart_v1';
+const COUPON_CODE = 'AR10';
+const COUPON_PERCENT = 10;
 
 class CartStore {
   private items: CartItem[] = [];
   private deliveryZone: DeliveryZone = 'inside_dhaka';
+  private couponCode = '';
   private listeners: Set<() => void> = new Set();
 
   constructor() {
@@ -35,13 +38,17 @@ class CartStore {
         if (Array.isArray(parsed.items)) {
           this.items = parsed.items
             .map((item: { productId: number; quantity: number }) => {
-              const product = getProductById(item.productId);
-              return product ? { product, quantity: item.quantity } : null;
+              const product = getProductById(Number(item.productId));
+              const quantity = Math.floor(Number(item.quantity));
+              return product && Number.isFinite(quantity) && quantity > 0 ? { product, quantity } : null;
             })
             .filter((i: CartItem | null): i is CartItem => i !== null);
         }
-        if (parsed.deliveryZone) {
+        if (parsed.deliveryZone === 'inside_dhaka' || parsed.deliveryZone === 'outside_dhaka') {
           this.deliveryZone = parsed.deliveryZone;
+        }
+        if (typeof parsed.couponCode === 'string' && parsed.couponCode.toUpperCase() === COUPON_CODE) {
+          this.couponCode = COUPON_CODE;
         }
       }
     } catch {
@@ -53,7 +60,8 @@ class CartStore {
     try {
       const toSave = {
         items: this.items.map(i => ({ productId: i.product.id, quantity: i.quantity })),
-        deliveryZone: this.deliveryZone
+        deliveryZone: this.deliveryZone,
+        couponCode: this.couponCode,
       };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
     } catch (e) {
@@ -83,6 +91,23 @@ class CartStore {
     return this.deliveryZone;
   }
 
+  public getCouponCode(): string {
+    return this.couponCode;
+  }
+
+  public applyCoupon(code: string): boolean {
+    if (code.trim().toUpperCase() !== COUPON_CODE || this.items.length === 0) return false;
+    this.couponCode = COUPON_CODE;
+    this.notify();
+    return true;
+  }
+
+  public removeCoupon(): void {
+    if (!this.couponCode) return;
+    this.couponCode = '';
+    this.notify();
+  }
+
   public setDeliveryZone(zone: DeliveryZone) {
     this.deliveryZone = zone;
     this.notify();
@@ -96,30 +121,41 @@ class CartStore {
     return this.items.reduce((sum, i) => sum + i.product.price * i.quantity, 0);
   }
 
+  public getCouponDiscountTotal(): number {
+    if (this.couponCode !== COUPON_CODE) return 0;
+    return Math.min(this.getSubtotal(), Math.round(this.getSubtotal() * COUPON_PERCENT / 100));
+  }
+
   public getTotal(): number {
     const sub = this.getSubtotal();
     if (sub === 0) return 0;
-    return sub + this.getDeliveryFee();
+    return Math.max(0, sub + this.getDeliveryFee() - this.getCouponDiscountTotal());
   }
 
   public addItem(product: Product, quantity = 1) {
+    const safeQuantity = Number.isFinite(quantity) ? Math.max(1, Math.floor(quantity)) : 1;
     const existing = this.items.find(i => i.product.id === product.id);
     if (existing) {
-      existing.quantity += quantity;
+      existing.quantity += safeQuantity;
     } else {
-      this.items.push({ product, quantity });
+      this.items.push({ product, quantity: safeQuantity });
     }
     this.notify();
   }
 
   public updateQuantity(productId: number, quantity: number) {
-    if (quantity <= 0) {
+    if (!Number.isFinite(quantity) || quantity <= 0) {
+      this.removeItem(productId);
+      return;
+    }
+    const safeQuantity = Math.floor(quantity);
+    if (safeQuantity < 1) {
       this.removeItem(productId);
       return;
     }
     const item = this.items.find(i => i.product.id === productId);
     if (item) {
-      item.quantity = quantity;
+      item.quantity = safeQuantity;
       this.notify();
     }
   }
@@ -131,6 +167,7 @@ class CartStore {
 
   public clear() {
     this.items = [];
+    this.couponCode = '';
     this.notify();
   }
 }

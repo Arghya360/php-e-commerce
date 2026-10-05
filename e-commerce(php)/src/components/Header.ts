@@ -27,7 +27,7 @@ export function renderHeader(props: HeaderProps): string {
 
           <!-- Left: Logo -->
           <a href="#" class="shop-brand-logo" id="header-brand-logo">
-            <img src="/uploads/assets/logo.png" alt="Falaq Food" class="brand-logo-img" />
+            <img src="/logo.png" alt="E-Commerce Shopping" class="brand-logo-img" />
           </a>
 
           <!-- Navigation Links -->
@@ -49,8 +49,8 @@ export function renderHeader(props: HeaderProps): string {
           </nav>
 
           <!-- Center/Right: Large Rounded Search Bar -->
-          <div class="header-search-container">
-            <form class="header-search-form" id="top-search-form" onsubmit="return false;">
+          <div class="header-search-container" id="header-search-wrapper">
+            <form class="header-search-form" id="top-search-form" onsubmit="return false;" autocomplete="off">
               <input 
                 type="text" 
                 id="top-search-input" 
@@ -58,14 +58,25 @@ export function renderHeader(props: HeaderProps): string {
                 placeholder="Search for Products..." 
                 value="${searchQuery}" 
                 autocomplete="off"
+                role="combobox"
+                aria-autocomplete="list"
+                aria-expanded="false"
+                aria-controls="search-suggestions-dropdown"
               />
-              <button type="submit" class="header-search-icon-btn" id="btn-top-search" aria-label="Search">
+              <button type="button" class="header-search-clear-btn ${searchQuery ? 'visible' : ''}" id="btn-search-clear" aria-label="Clear search" title="Clear">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round">
+                  <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+              </button>
+              <button type="button" class="header-search-icon-btn" id="btn-top-search" aria-label="Search">
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
                   <circle cx="11" cy="11" r="8"></circle>
                   <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
               </button>
             </form>
+            <!-- Search Suggestions Dropdown -->
+            <div class="search-suggestions-dropdown" id="search-suggestions-dropdown" role="listbox" aria-label="Search suggestions"></div>
           </div>
 
           <!-- Right: Circular User and Cart Icons -->
@@ -114,14 +125,17 @@ export function renderHeader(props: HeaderProps): string {
       <!-- Mobile Navigation Drawer -->
       <div class="mobile-nav-drawer" id="mobile-nav-drawer">
         <div class="mobile-drawer-header">
-          <img src="/uploads/assets/logo.png" alt="Falaq Food" style="height: 32px;" />
+          <img src="/logo.png" alt="E-Commerce Shopping" style="height: 36px; object-fit: contain;" />
           <button class="drawer-close-btn" id="btn-close-mobile-nav" aria-label="Close menu">&times;</button>
         </div>
         <ul class="mobile-menu-links">
-          <li><a href="#" class="mobile-link" data-nav="Home">Home</a></li>
-          <li><a href="#" class="mobile-link active" data-nav="Shop">Shop</a></li>
-          <li><a href="#" class="mobile-link" data-nav="Offers">Offers</a></li>
-          <li><a href="#" class="mobile-link" data-nav="New Arrivals">New Arrivals</a></li>
+          <li><a href="#" class="mobile-link ${activeNav === 'Home' ? 'active' : ''}" data-nav="Home">Home</a></li>
+          <li><a href="#" class="mobile-link ${activeNav === 'Shop' ? 'active' : ''}" data-nav="Shop">Shop</a></li>
+          <li><a href="#" class="mobile-link ${activeNav === 'Offers' ? 'active' : ''}" data-nav="Offers">Offers</a></li>
+          <li><a href="#" class="mobile-link ${activeNav === 'New Arrivals' ? 'active' : ''}" data-nav="New Arrivals">New Arrivals</a></li>
+          <li><a href="#" class="mobile-link ${activeNav === 'Login' ? 'active' : ''}" data-nav="Login">Customer Login</a></li>
+          <li><a href="#" class="mobile-link" data-route="cart">Shopping Cart</a></li>
+          <li><a href="#" class="mobile-link" data-route="wishlist">Wishlist</a></li>
         </ul>
         <div class="mobile-drawer-categories">
           <h4>Categories</h4>
@@ -135,6 +149,23 @@ export function renderHeader(props: HeaderProps): string {
         </div>
       </div>
       <div class="mobile-drawer-backdrop" id="mobile-nav-backdrop"></div>
+      <nav class="mobile-bottom-nav" aria-label="Mobile navigation">
+        <button type="button" class="mobile-bottom-nav-item" data-bottom-menu aria-label="Open menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span>Menu</span>
+        </button>
+        <a href="/shop" class="mobile-bottom-nav-item ${activeNav === 'Shop' ? 'active' : ''}" data-route="shop">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l1 13H4L5 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg><span>Shop</span>
+        </a>
+        <a href="/" class="mobile-bottom-nav-item mobile-bottom-home ${activeNav === 'Home' ? 'active' : ''}" data-route="home">
+          <span class="mobile-bottom-home-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 11 9-8 9 8v10h-6v-6H9v6H3V11Z"/></svg></span><span>Home</span>
+        </a>
+        <a href="/cart" class="mobile-bottom-nav-item ${activeNav === 'Cart' ? 'active' : ''}" data-route="cart">
+          <span class="mobile-bottom-cart-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l1 13H4L5 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>${cartCount ? `<b>${cartCount}</b>` : ''}</span><span>Cart</span>
+        </a>
+        <a href="/login" class="mobile-bottom-nav-item ${activeNav === 'Login' ? 'active' : ''}" data-route="login">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>Account</span>
+        </a>
+      </nav>
     </header>
   `;
 }

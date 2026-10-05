@@ -1,4 +1,4 @@
-import { PRODUCTS } from '../data/products';
+import { PRODUCTS, getProductOriginalPrice } from '../data/products';
 import { BLOG_POSTS } from '../data/blogs';
 import { REVIEWS } from '../data/reviews';
 import { renderFalaqFooter } from './Footer';
@@ -95,6 +95,11 @@ export function renderHomePage(props: HomePageProps): string {
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
             </button>
           </div>
+          <div class="category-carousel-indicators" id="category-carousel-indicators" aria-label="Category pages">
+            ${Array.from({ length: Math.ceil(HOME_CATEGORIES.length / 3) }, (_, index) => `
+              <button type="button" class="category-carousel-indicator ${index === 0 ? 'active' : ''}" data-category-page="${index}" aria-label="Show category group ${index + 1}" aria-pressed="${index === 0}"></button>
+            `).join('')}
+          </div>
         </div>
       </section>
 
@@ -104,14 +109,19 @@ export function renderHomePage(props: HomePageProps): string {
           <h2 class="elementor-heading-title recent-products-title">Recent Products</h2>
           <div class="products-loop-grid">
             ${recentProducts.map(p => `
-              <div class="product-card" data-pid="${p.id}">
+              <div class="product-card" data-product-id="${p.id}" role="link" tabindex="0" aria-label="View ${p.title}">
                 ${p.badge ? `<span class="sale-badge">${p.badge}</span>` : ''}
-                <div class="product-img-wrap" data-add="${p.id}">
+                <button type="button" class="home-product-wishlist" data-home-wishlist="${p.id}" aria-label="Add ${p.title} to wishlist" aria-pressed="false">♡</button>
+                <div class="product-img-wrap">
                   <img src="${p.image}" alt="${p.title}" loading="lazy" />
                 </div>
-                <h3 class="product-title" data-add="${p.id}">${p.title}</h3>
-                <div class="product-price">${p.priceDisplay}</div>
-                <button class="btn-add-to-cart" data-add="${p.id}">
+                <h3 class="product-title">${p.title}</h3>
+                <div class="product-card-rating" aria-label="${p.rating ?? 5} out of 5 stars">${'★'.repeat(Math.round(p.rating ?? 5))}${'☆'.repeat(5 - Math.round(p.rating ?? 5))} <span>(${p.reviewCount ?? 0})</span></div>
+                <div class="product-price">
+                  <span class="product-price-desktop">${p.priceDisplay}</span>
+                  <span class="product-price-mobile">${getProductOriginalPrice(p) ? `<del>${getProductOriginalPrice(p)}৳</del> ` : ''}${p.price}৳</span>
+                </div>
+                <button class="btn-add-to-cart" data-add="${p.id}" aria-label="Add ${p.title} to cart">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 5L19 12H7.37671M20 16H8L6 3H3M16 5.5H13.5M13.5 5.5H11M13.5 5.5V8M13.5 5.5V3M9 20C9 20.5523 8.55228 21 8 21C7.44772 21 7 20.5523 7 20C7 19.4477 7.44772 19 8 19C8.55228 19 9 19.4477 9 20ZM20 20C20 20.5523 19.5523 21 19 21C18.4477 21 18 20.5523 18 20C18 19.4477 18.4477 19 19 19C19.5523 19 20 19.4477 20 20Z"></path></svg>
                   <span>Add to Cart</span>
                 </button>
